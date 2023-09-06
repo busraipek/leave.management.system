@@ -1,9 +1,10 @@
-﻿unit userPage;
+unit userPage;
 interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Grids, dbConnection, creatUserPage,
-  Vcl.ComCtrls, editUserPage, Vcl.ExtCtrls, Oracle, adminRequestControlPage,  ComObj;
+  Vcl.ComCtrls, editUserPage, Vcl.ExtCtrls, Oracle, adminRequestControlPage,  ComObj,
+  Vcl.DBCtrls;
 type
   TuserForm = class(TForm)
     createNewUserButton: TButton;
@@ -23,6 +24,7 @@ type
     exportBtn: TButton;
     employeesTable: TStringGrid;
     Button1: TButton;
+    DBLookupComboBox1: TDBLookupComboBox;
     procedure FormClose(Sender: TObject; var Action: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure createNewUserButtonClick(Sender: TObject);
@@ -146,7 +148,6 @@ end;
   Self.employeesTable.ColWidths[5] := 220;
   Self.employeesTable.ColWidths[6] := 80;
 
-
     userForm.fillTable(dbConnection.dbForm.employeesTableQ);
   end;
 
@@ -206,7 +207,6 @@ procedure TuserForm.deleteUserButtonClick(Sender: TObject);
     dbConnection.dbForm.deleteUserWithIdQ.Close;
     self.employeesTable.Refresh;
     userForm.fillTable(dbConnection.dbForm.employeesTableQ);
-
   end;
 procedure TuserForm.employeesTableDblClick(Sender: TObject);
 begin
@@ -341,11 +341,11 @@ begin
       begin
         checkEmptyBox := False;
       end;
-end;
-procedure TuserForm.Button1Click(Sender: TObject);
- VAR
+ end;
+ procedure TuserForm.Button1Click(Sender: TObject);
+  VAR
  EXCELDEKISATIR:Integer;
-BEGIN
+ BEGIN
 
   EXCELDOSYASI := CreateOleObject('Calc.Application');
   With TOpenDialog.Create(nil) do
@@ -353,29 +353,71 @@ BEGIN
       Filter := 'Ods file|*.ods|Csv file|*.cvs';
     if Execute then
     begin
+     try
         EXCELDOSYASI.Visible:=false;
           EXCELDOSYASI.workbooks.open(FileName);
           exceldebilgisayisi;
-          for EXCELDEKISATIR:=2 to KACSATIR  do begin
-           dbconnection.dbForm.insertUserQ.SetVariable('firstname',(exceldosyasi.ActiveSheet.Cells[EXCELDEKISATIR,2].Value)) ;
-           dbconnection.dbForm.insertUserQ.SetVariable('lastname',(exceldosyasi.ActiveSheet.Cells[EXCELDEKISATIR,3].Value)) ;
-           dbconnection.dbForm.insertUserQ.SetVariable('phone',(exceldosyasi.ActiveSheet.Cells[EXCELDEKISATIR,4].Value)) ;
-           dbconnection.dbForm.insertUserQ.SetVariable('email',(exceldosyasi.ActiveSheet.Cells[EXCELDEKISATIR,6].Value)) ;
-           dbconnection.dbForm.insertUserQ.SetVariable('department',(exceldosyasi.ActiveSheet.Cells[EXCELDEKISATIR,5].Value)) ;
-           dbconnection.dbForm.insertUserQ.SetVariable('seniority',(exceldosyasi.ActiveSheet.Cells[EXCELDEKISATIR,7].Value)) ;
-           dbconnection.dbForm.insertUserQ.Execute;
 
+           for EXCELDEKISATIR:=2 to KACSATIR  do
+              begin
+                dbconnection.dbForm.employee.SetVariable('firstname',(exceldosyasi.ActiveSheet.Cells[EXCELDEKISATIR,2].Value)) ;
+                dbconnection.dbForm.employee.SetVariable('lastname',(exceldosyasi.ActiveSheet.Cells[EXCELDEKISATIR,3].Value)) ;
+                dbconnection.dbForm.employee.SetVariable('department',(exceldosyasi.ActiveSheet.Cells[EXCELDEKISATIR,5].Value));
+                dbconnection.dbForm.employee.Execute;
+                if dbconnection.dbForm.employee.RowCount=0  then
+                begin
+              dbconnection.dbForm.depart.SetVariable('department',(exceldosyasi.ActiveSheet.Cells[EXCELDEKISATIR,5].Value));
+              dbconnection.dbForm.depart.Execute;
+              if dbconnection.dbForm.depart.RowCount>0  then
+                begin
+                 with   dbconnection.dbForm.insertUserQ    do
+                 begin
+                SetVariable('firstname',(exceldosyasi.ActiveSheet.Cells[EXCELDEKISATIR,2].Value)) ;
+                SetVariable('lastname',(exceldosyasi.ActiveSheet.Cells[EXCELDEKISATIR,3].Value)) ;
+                SetVariable('phone',(exceldosyasi.ActiveSheet.Cells[EXCELDEKISATIR,4].Value)) ;
+                SetVariable('email',(exceldosyasi.ActiveSheet.Cells[EXCELDEKISATIR,6].Value)) ;
+                SetVariable('department',(exceldosyasi.ActiveSheet.Cells[EXCELDEKISATIR,5].Value)) ;
+                SetVariable('seniority',(exceldosyasi.ActiveSheet.Cells[EXCELDEKISATIR,7].Value)) ;
+                 end;
+                 try
+                  if (exceldosyasi.ActiveSheet.Cells[EXCELDEKISATIR,4].Value)>1 then
+                        begin
+                          if length(exceldosyasi.ActiveSheet.Cells[EXCELDEKISATIR,4].Value)=10  then
+                            begin
+                                dbconnection.dbForm.insertUserQ.Execute;
+                            end
+                            else
+                            begin
+                            showmessage('there are some values can not be imported: '+(exceldosyasi.ActiveSheet.Cells[EXCELDEKISATIR,2].Value)+' '+(exceldosyasi.ActiveSheet.Cells[EXCELDEKISATIR,3].Value));
+                            continue;
+                            end;
+                        end;
+                  except
+                  begin
+                   showmessage('there are some values can not be imported: '+(exceldosyasi.ActiveSheet.Cells[EXCELDEKISATIR,2].Value)+' '+(exceldosyasi.ActiveSheet.Cells[EXCELDEKISATIR,3].Value));
+                  continue;
+                  end;
+                end;
+              end;
+           end
+           else
+           begin
+             showmessage('This user is already an employee: '+(exceldosyasi.ActiveSheet.Cells[EXCELDEKISATIR,2].Value)+' '+(exceldosyasi.ActiveSheet.Cells[EXCELDEKISATIR,3].Value));
            end;
+         end;
          userForm.fillTable(dbConnection.dbForm.employeesTableQ);
-
+       except
+       begin
+      showmessage('file didnt import succesfully');
+       end;
+      end;
+    end;
      if not VarIsEmpty(EXCELDOSYASI) then
      begin
         EXCELDOSYASI.DisplayAlerts := False;
         EXCELDOSYASI.Quit;
         EXCELDOSYASI := Unassigned;
      end;
-   end;
-   end;
-end;
+    end;
+ end;
 end.
-
