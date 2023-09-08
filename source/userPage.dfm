@@ -152,4 +152,14 @@ object userForm: TuserForm
     TabOrder = 6
     OnClick = Button1Click
   end
+  object DBLookupComboBox1: TDBLookupComboBox
+    Left = 272
+    Top = 406
+    Width = 145
+    Height = 23
+    DataSource = dbForm.DataSource1
+    KeyField = 'firstname'
+    ListSource = dbForm.DataSource1
+    TabOrder = 7
+  end
 end

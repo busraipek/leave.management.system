@@ -5,7 +5,6 @@ uses
   Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.StdCtrls, Vcl.Grids, dbConnection;
 type
   TeditUser = class(TForm)
-    userGrid: TStringGrid;
     firstNameBox: TEdit;
     lastNameBox: TEdit;
     phoneBox: TEdit;
@@ -19,6 +18,7 @@ type
     editButton: TButton;
     senioritybox: TEdit;
     Label1: TLabel;
+    Button1: TButton;
     procedure FormCreate(Sender: TObject);
     procedure editButtonClick(Sender: TObject);
     constructor Create(AOwner: TComponent; const userId: integer);reintroduce;
@@ -33,6 +33,7 @@ type
     procedure phoneBoxExit(Sender: TObject);
     procedure emailBoxKeyPress(Sender: TObject; var Key: Char);
     procedure seniorityboxKeyPress(Sender: TObject; var Key: Char);
+    procedure Button1Click(Sender: TObject);
   private
     { Private declarations }
   public
@@ -45,7 +46,12 @@ implementation
 uses
   userpage;
 {$R *.dfm}
- constructor tedituser.Create(AOwner: TComponent; const userId : integer);
+ procedure TeditUser.Button1Click(Sender: TObject);
+begin
+fill;
+end;
+
+constructor tedituser.Create(AOwner: TComponent; const userId : integer);
 begin
   inherited Create(AOwner);
   Self.m_userId := userId;
@@ -145,16 +151,19 @@ procedure tedituser.fill();
 var
   j: integer;
 begin
-      with dbConnection.dbForm.getEmployeeByIdQ do
-        begin
-           SetVariable('id', self.m_userid);
-           Execute;
-            for j := 0 to 6 do
-            begin
-              Self.userGrid.Cells[1,j]  := dbConnection.dbForm.getEmployeeByIdQ.Field(j);
-            end;
-        end;
+try
+   dbConnection.dbForm.getEmployeeByIdQ.SetVariable('id', self.m_userid);
+   dbConnection.dbForm.getEmployeeByIdQ.Execute;
+   Self.firstNameBox.Text  := dbConnection.dbForm.getEmployeeByIdQ.Field('firstname');
+   Self.lastnamebox.Text  := dbConnection.dbForm.getEmployeeByIdQ.Field('lastname');
+   Self.phonebox.Text  := dbConnection.dbForm.getEmployeeByIdQ.Field('phone');
+   Self.departmentBox.Text  := dbConnection.dbForm.getEmployeeByIdQ.Field('department');
+   Self.emailBox.Text  := dbConnection.dbForm.getEmployeeByIdQ.Field('email');
+   Self.senioritybox.Text  := dbConnection.dbForm.getEmployeeByIdQ.Field('seniority');
     dbConnection.dbForm.getEmployeeByIdQ.Close;
+  except
+  showmessage('Form cannot load');
+end;
 end;
 procedure TeditUser.firstNameBoxKeyPress(Sender: TObject; var Key: Char);
 begin
@@ -165,21 +174,8 @@ end;
 procedure TeditUser.FormCreate(Sender: TObject);
 begin
 
-    Self.userGrid.Cells[0,0] := 'ID';
-    Self.userGrid.Cells[0,1] := 'First Name';
-    Self.userGrid.Cells[0,2] := 'Last Name';
-    Self.userGrid.Cells[0,3] := 'Phone';
-    Self.userGrid.Cells[0,4] := 'Department';
-    Self.userGrid.Cells[0,5] := 'E-mail';
-    Self.userGrid.Cells[0,6] := 'Seniority';
-    Self.userGrid.ColWidths[1] := 290;
     fill;
-    Self.firstNameBox.Text :=  Self.userGrid.Cells[1,1];
-    Self.lastNameBox.Text :=  Self.userGrid.Cells[1,2];
-    Self.phoneBox.Text :=  Self.userGrid.Cells[1,3];
-    Self.departmentBox.Text :=  Self.userGrid.Cells[1,4];
-    Self.emailBox.Text :=  Self.userGrid.Cells[1,5];
-    Self.senioritybox.Text :=  Self.userGrid.Cells[1,6];
+
  end;
 procedure TeditUser.lastNameBoxKeyPress(Sender: TObject; var Key: Char);
 begin

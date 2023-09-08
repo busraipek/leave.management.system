@@ -1,4 +1,4 @@
-unit userPage;
+﻿unit userPage;
 interface
 uses
   Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
@@ -207,6 +207,7 @@ procedure TuserForm.deleteUserButtonClick(Sender: TObject);
     dbConnection.dbForm.deleteUserWithIdQ.Close;
     self.employeesTable.Refresh;
     userForm.fillTable(dbConnection.dbForm.employeesTableQ);
+
   end;
 procedure TuserForm.employeesTableDblClick(Sender: TObject);
 begin
@@ -406,12 +407,16 @@ begin
            end;
          end;
          userForm.fillTable(dbConnection.dbForm.employeesTableQ);
+
        except
        begin
       showmessage('file didnt import succesfully');
        end;
+
       end;
     end;
+
+
      if not VarIsEmpty(EXCELDOSYASI) then
      begin
         EXCELDOSYASI.DisplayAlerts := False;
@@ -419,5 +424,9 @@ begin
         EXCELDOSYASI := Unassigned;
      end;
     end;
- end;
+
+ END;
+
+
 end.
+

@@ -568,4 +568,21 @@ object dbForm: TdbForm
     Left = 408
     Top = 304
   end
+  object employee: TOracleQuery
+    SQL.Strings = (
+      'select * from employee '
+      'where '
+      'firstname = :firstname and'
+      'lastname = :lastname and'
+      'department = :department')
+    Session = OracleSession1
+    Optimize = False
+    Variables.Data = {
+      0400000003000000120000003A004C004100530054004E0041004D0045000500
+      00000000000000000000160000003A004400450050004100520054004D004500
+      4E005400050000000000000000000000140000003A0046004900520053005400
+      4E0041004D004500050000000000000000000000}
+    Left = 488
+    Top = 304
+  end
 end

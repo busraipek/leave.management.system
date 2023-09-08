@@ -42,6 +42,7 @@ type
     comparedate: TOracleQuery;
     datebyreid: TOracleQuery;
     bysenior: TOracleQuery;
+    employee: TOracleQuery;
   private
     { Private declarations }
   public
