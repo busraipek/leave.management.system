@@ -2,8 +2,8 @@ object loginForm: TloginForm
   Left = 0
   Top = 0
   Caption = 'Leave Request System'
-  ClientHeight = 358
-  ClientWidth = 474
+  ClientHeight = 355
+  ClientWidth = 464
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -225,6 +225,7 @@ object loginForm: TloginForm
     Width = 121
     Height = 23
     TabOrder = 0
+    OnClick = usernameTextBoxClick
     OnKeyDown = FormKeyDown
   end
   object passwordTextBox: TEdit

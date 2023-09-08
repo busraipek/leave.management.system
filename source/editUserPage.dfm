@@ -2,8 +2,8 @@ object editUser: TeditUser
   Left = 0
   Top = 0
   Caption = 'Edit User'
-  ClientHeight = 442
-  ClientWidth = 614
+  ClientHeight = 410
+  ClientWidth = 393
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -14,117 +14,204 @@ object editUser: TeditUser
   OnCreate = FormCreate
   TextHeight = 15
   object firstNameEditLabel: TLabel
-    Left = 327
-    Top = 75
-    Width = 60
-    Height = 15
+    Left = 24
+    Top = 45
+    Width = 69
+    Height = 19
     Caption = 'First Name:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
   end
   object lastNameEditLabel: TLabel
-    Left = 328
-    Top = 115
-    Width = 59
-    Height = 15
+    Left = 24
+    Top = 95
+    Width = 68
+    Height = 19
     Caption = 'Last Name:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
   end
   object phoneEditLabel: TLabel
-    Left = 328
-    Top = 155
-    Width = 37
-    Height = 15
+    Left = 24
+    Top = 145
+    Width = 42
+    Height = 19
     Caption = 'Phone:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
   end
   object departmentEditLabel: TLabel
-    Left = 328
+    Left = 24
     Top = 195
-    Width = 66
-    Height = 15
+    Width = 77
+    Height = 19
     Caption = 'Department:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
   end
   object emailEditLabel: TLabel
-    Left = 328
-    Top = 237
-    Width = 32
-    Height = 15
+    Left = 24
+    Top = 245
+    Width = 35
+    Height = 19
     Caption = 'Email:'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
   end
   object Label1: TLabel
-    Left = 328
-    Top = 278
-    Width = 46
-    Height = 15
+    Left = 24
+    Top = 299
+    Width = 69
+    Height = 25
+    AutoSize = False
     Caption = 'Seniority'
-  end
-  object userGrid: TStringGrid
-    Left = 16
-    Top = 72
-    Width = 273
-    Height = 221
-    ColCount = 2
-    DefaultColWidth = 80
-    DefaultRowHeight = 30
-    RowCount = 7
-    FixedRows = 0
-    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goRowSizing, goColSizing, goFixedRowDefAlign]
-    TabOrder = 0
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
   end
   object firstNameBox: TEdit
-    Left = 400
-    Top = 72
-    Width = 185
-    Height = 23
-    TabOrder = 1
+    Left = 137
+    Top = 36
+    Width = 224
+    Height = 36
+    AutoSize = False
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Cambria'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 0
     OnKeyPress = firstNameBoxKeyPress
   end
   object lastNameBox: TEdit
-    Left = 400
-    Top = 112
-    Width = 185
-    Height = 23
-    TabOrder = 2
+    Left = 137
+    Top = 86
+    Width = 224
+    Height = 36
+    AutoSize = False
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Cambria'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 1
     OnKeyPress = lastNameBoxKeyPress
   end
   object phoneBox: TEdit
-    Left = 400
-    Top = 152
-    Width = 185
-    Height = 23
-    TabOrder = 3
+    Left = 137
+    Top = 136
+    Width = 224
+    Height = 36
+    AutoSize = False
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Cambria'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 2
     OnExit = phoneBoxExit
     OnKeyPress = phoneBoxKeyPress
   end
   object departmentBox: TEdit
-    Left = 400
-    Top = 192
-    Width = 185
-    Height = 23
-    TabOrder = 4
+    Left = 137
+    Top = 186
+    Width = 224
+    Height = 36
+    AutoSize = False
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Cambria'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 3
     OnKeyPress = departmentBoxKeyPress
   end
   object emailBox: TEdit
-    Left = 400
-    Top = 234
-    Width = 185
-    Height = 23
-    TabOrder = 5
+    Left = 137
+    Top = 236
+    Width = 224
+    Height = 36
+    AutoSize = False
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Cambria'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 4
     OnKeyPress = emailBoxKeyPress
   end
   object editButton: TButton
-    Left = 312
-    Top = 344
-    Width = 75
-    Height = 25
+    Left = 224
+    Top = 352
+    Width = 89
+    Height = 41
     Caption = 'Edit'
-    TabOrder = 6
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 5
     OnClick = editButtonClick
   end
   object senioritybox: TEdit
-    Left = 400
-    Top = 275
-    Width = 185
-    Height = 23
+    Left = 137
+    Top = 288
+    Width = 224
+    Height = 36
+    AutoSize = False
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Cambria'
+    Font.Style = []
     MaxLength = 1
-    TabOrder = 7
+    ParentFont = False
+    TabOrder = 6
     OnKeyPress = seniorityboxKeyPress
+  end
+  object Button1: TButton
+    Left = 72
+    Top = 352
+    Width = 89
+    Height = 41
+    Caption = 'Restart'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Segoe UI'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 7
+    OnClick = Button1Click
   end
 end

@@ -14,6 +14,7 @@ type
     hititLogoImage: TImage;
     procedure loginButtonClick(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+    procedure usernameTextBoxClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -26,7 +27,6 @@ implementation
 {$R *.dfm}
 procedure TloginForm.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
-
     if ssCtrl in Shift then
     begin
       usernametextbox.Font.Color := clwhite;
@@ -40,7 +40,6 @@ begin
       end;
     end
 end;
-
 procedure TloginForm.loginButtonClick(Sender: TObject);
   var
     control:integer;
@@ -48,14 +47,12 @@ procedure TloginForm.loginButtonClick(Sender: TObject);
     lpassword : string;
     lleaveRequestForm : TleaveRequestForm;
   begin
-
        control:=0;
        //ShowMessage('Click girdi');
        begin
        //ShowMessage('ife girdi');
        //dbConnection.dbForm.OracleSession1.CheckConnection();
        dbConnection.dbForm.userLoginTable.Execute;
-
        while not dbConnection.dbForm.userLoginTable.Eof do
            begin
               //ShowMessage('While döngüye girdi');
@@ -87,7 +84,16 @@ procedure TloginForm.loginButtonClick(Sender: TObject);
        end;
        dbConnection.dbForm.userLoginTable.Close;
   end;
-  function TloginForm.checkAdminConnection(username : string): boolean;
+  procedure TloginForm.usernameTextBoxClick(Sender: TObject);
+begin
+  if usernametextbox.Text='admin' then
+  begin
+    self.usernameTextBox.Clear;
+    self.passwordTextBox.Clear;
+  end;
+end;
+
+function TloginForm.checkAdminConnection(username : string): boolean;
   begin
     if (username = 'admin')  then
     begin
@@ -97,6 +103,4 @@ procedure TloginForm.loginButtonClick(Sender: TObject);
       checkAdminConnection := False;
     end;
   end;
-
 end.
-
